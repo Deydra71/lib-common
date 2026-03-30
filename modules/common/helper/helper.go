@@ -203,7 +203,7 @@ func (h *Helper) PatchInstance(ctx context.Context, instance client.Object) erro
 	}
 
 	changes := h.GetChanges()
-	patch := client.MergeFrom(h.GetBeforeObject())
+	patch := client.MergeFromWithOptions(h.GetBeforeObject(), client.MergeFromWithOptimisticLock{})
 
 	if changes["metadata"] {
 		err = h.GetClient().Patch(ctx, instance, patch)
